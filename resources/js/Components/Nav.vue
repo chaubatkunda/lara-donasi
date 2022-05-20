@@ -1,7 +1,9 @@
 <template>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <div class="container">
-            <Link class="navbar-brand" :href="route('home')">Lara'Donasi</Link>
+            <Link class="navbar-brand" :href="route('donasi')"
+                >Lara'Donasi</Link
+            >
             <button
                 class="navbar-toggler"
                 type="button"
@@ -14,14 +16,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <NavLink
-                            :active="route().current('home')"
-                            :href="route('home')"
-                            >Home</NavLink
-                        >
-                    </li>
+                <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
                         <NavLink
                             :active="route().current('donasi')"
@@ -29,7 +24,29 @@
                             >Donasi</NavLink
                         >
                     </li>
+                    <li class="nav-item">
+                        <NavLink
+                            :active="route().current('donasi.saya')"
+                            :href="route('donasi.saya')"
+                            >Donasi Saya</NavLink
+                        >
+                    </li>
+                    <li class="nav-item">
+                        <NavLink
+                            :active="route().current('galang.dana')"
+                            :href="route('galang.dana')"
+                            >Galang Dana</NavLink
+                        >
+                    </li>
                 </ul>
+                <div class="d-flex">
+                    <input
+                        class="form-control ms-2"
+                        type="search"
+                        placeholder="Coba Cari"
+                        aria-label="Search"
+                    />
+                </div>
                 <button
                     class="btn btn-info ms-3"
                     type="button"

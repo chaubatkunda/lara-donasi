@@ -1,10 +1,10 @@
 <script setup>
-import BreezeButton from "@/Components/Button.vue";
-import BreezeCheckbox from "@/Components/Checkbox.vue";
-import BreezeGuestLayout from "@/Layouts/Guest.vue";
-import BreezeInput from "@/Components/Input.vue";
-import BreezeLabel from "@/Components/Label.vue";
-import BreezeValidationErrors from "@/Components/ValidationErrors.vue";
+import Botton from "@/Components/Button.vue";
+import Checkbox from "@/Components/Checkbox.vue";
+import GuestLayout from "@/Layouts/GuestLayout.vue";
+import Input from "@/Components/Input.vue";
+import Label from "@/Components/Label.vue";
+import ValidationErrors from "@/Components/ValidationErrors.vue";
 import { Head, Link, useForm } from "@inertiajs/inertia-vue3";
 
 defineProps({
@@ -26,68 +26,79 @@ const submit = () => {
 </script>
 
 <template>
-    <BreezeGuestLayout>
+    <GuestLayout>
         <Head title="Log in" />
-
-        <BreezeValidationErrors class="mb-4" />
-
-        <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
+        <ValidationErrors class="mb-4" />
+        <div v-if="status" class="mb-4 text-success">
             {{ status }}
         </div>
+        <div class="card shadow-lg border-0">
+            <div class="card-body">
+                <form @submit.prevent="submit" autocomplete="off">
+                    <div>
+                        <Label for="email" value="Email" />
+                        <Input
+                            id="email"
+                            type="text"
+                            v-model="form.email"
+                            autofocus
+                            autocomplete="username"
+                        />
+                    </div>
+                    <div class="mt-4">
+                        <Label for="password" value="Password" />
+                        <Input
+                            id="password"
+                            type="password"
+                            v-model="form.password"
+                            autocomplete="current-password"
+                        />
+                    </div>
 
-        <form @submit.prevent="submit">
-            <div>
-                <BreezeLabel for="email" value="Email" />
-                <BreezeInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    v-model="form.email"
-                    required
-                    autofocus
-                    autocomplete="username"
-                />
-            </div>
-            <h5 class="text-primary">Test</h5>
-            <div class="mt-4">
-                <BreezeLabel for="password" value="Password" />
-                <BreezeInput
-                    id="password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password"
-                    required
-                    autocomplete="current-password"
-                />
-            </div>
+                    <div class="d-flex justify-content-between">
+                        <div class="mt-4">
+                            <Label>
+                                <Checkbox
+                                    name="remember"
+                                    v-model:checked="form.remember"
+                                />
+                                <span class="ms-2">
+                                    <small>Remember me</small>
+                                </span>
+                            </Label>
+                        </div>
+                        <div class="mt-4">
+                            <Link
+                                v-if="canResetPassword"
+                                :href="route('password.request')"
+                                class="text-decoration-none"
+                            >
+                                <small class="border-bottom">
+                                    Forgot your password?
+                                </small>
+                            </Link>
+                        </div>
+                    </div>
+                    <div class="d-grid">
+                        <Botton
+                            class="mt-4"
+                            :class="{ 'opacity-25': form.processing }"
+                            :disabled="form.processing"
+                        >
+                            Log in
+                        </Botton>
 
-            <div class="block mt-4">
-                <label class="flex items-center">
-                    <BreezeCheckbox
-                        name="remember"
-                        v-model:checked="form.remember"
-                    />
-                    <span class="ml-2 text-sm text-gray-600">Remember me</span>
-                </label>
+                        <small class="mt-4"
+                            >Don't have account?
+                            <Link
+                                :href="route('register')"
+                                class="text-decoration-none border-bottom"
+                                >Register</Link
+                            >
+                        </small>
+                    </div>
+                </form>
             </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <Link
-                    v-if="canResetPassword"
-                    :href="route('password.request')"
-                    class="underline text-sm text-gray-600 hover:text-gray-900"
-                >
-                    Forgot your password?
-                </Link>
-
-                <BreezeButton
-                    class="ml-4"
-                    :class="{ 'opacity-25': form.processing }"
-                    :disabled="form.processing"
-                >
-                    Log in
-                </BreezeButton>
-            </div>
-        </form>
-    </BreezeGuestLayout>
+        </div>
+    </GuestLayout>
 </template>

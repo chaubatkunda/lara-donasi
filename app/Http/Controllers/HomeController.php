@@ -11,8 +11,25 @@ class HomeController extends Controller
         return inertia('Home');
     }
 
-    public function donasi()
+    public function kumpuldonasi($slug)
     {
         return inertia('Donasi');
+    }
+
+    public function nominaldonasi($slug)
+    {
+        return inertia('NominalDonasi');
+    }
+
+    public function donasisaya()
+    {
+        return inertia('DonasiSaya');
+    }
+
+
+
+    public function galangdana()
+    {
+        return inertia('GalangDana');
     }
 }

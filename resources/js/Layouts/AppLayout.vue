@@ -3,6 +3,11 @@
         <BackDrop />
         <Nav />
         <slot />
+        <footer class="footer">
+            <div class="container">
+                <strong>&copy; Malang 2022</strong>
+            </div>
+        </footer>
     </div>
 </template>
 
