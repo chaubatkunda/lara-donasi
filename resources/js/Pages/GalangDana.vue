@@ -1,7 +1,15 @@
 <template>
     <Head title="Galang Dana" />
     <app-layout>
-        <h5>Galang Dana</h5>
+        <div class="container">
+            <div class="row vh-100">
+                <div class="col-md-">
+                    <div class="alert alert-success mt-5" role="alert">
+                        dikembangkan
+                    </div>
+                </div>
+            </div>
+        </div>
     </app-layout>
 </template>
 <script>

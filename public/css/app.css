@@ -11297,6 +11297,9 @@ body .card .image-donasi {
   -o-object-fit: cover;
      object-fit: cover;
 }
+body .main .container-fluid .nav-dasbor, body .main .container-sm .nav-dasbor, body .main .container-md .nav-dasbor, body .main .container-lg .nav-dasbor, body .main .container-xl .nav-dasbor, body .main .container-xxl .nav-dasbor {
+  flex-wrap: nowrap;
+}
 body .footer {
   min-height: 100px;
   margin-top: 20px;

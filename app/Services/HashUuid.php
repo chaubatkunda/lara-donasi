@@ -4,11 +4,11 @@ namespace App\Services;
 
 use Illuminate\Support\Str;
 
-trait HasUuId
+trait HashUuid
 {
-    protected static function boot()
+    protected static function bootHashUuid()
     {
-        parent::boot();
+        // parent::boot();
         static::creating(function ($model) {
             if (empty($model->{$model->getKeyName()})) {
                 $model->{$model->getKeyName()} = (string) Str::uuid();

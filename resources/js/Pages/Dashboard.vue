@@ -1,26 +1,23 @@
 <script setup>
-import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
-import { Head } from '@inertiajs/inertia-vue3';
+import DashboardLayout from "@/Layouts/DashboardLayout.vue";
+import { Head } from "@inertiajs/inertia-vue3";
 </script>
 
 <template>
     <Head title="Dashboard" />
-
-    <BreezeAuthenticatedLayout>
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Dashboard
-            </h2>
-        </template>
-
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 bg-white border-b border-gray-200">
-                        You're logged in!
+    <DashboardLayout>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="mt-5">
+                    <div class="card">
+                        <div class="card-body">
+                            Lorem ipsum dolor sit amet consectetur, adipisicing
+                            elit. Quaerat voluptas mollitia consectetur harum
+                            at, nisi incidunt vitae delectus cupiditate saepe?
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </BreezeAuthenticatedLayout>
+    </DashboardLayout>
 </template>

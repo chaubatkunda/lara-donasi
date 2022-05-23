@@ -9,18 +9,22 @@
                     <strong class="border-bottom text-primary">Mendesak</strong>
                 </div>
                 <div class="row">
-                    <div class="col-md-4">
+                    <div
+                        class="col-md-4"
+                        v-for="campaign in campaigns"
+                        :key="campaign"
+                    >
                         <Link
-                            :href="route('kumpul.donasi', 'banjir-surabaya')"
+                            :href="route('kumpul.donasi', campaign.slug)"
                             class="text-decoration-none"
                         >
                             <div class="card shadow border-0">
                                 <img
-                                    :src="getImagePath('img_2.jpg')"
+                                    :src="getImagePath(campaign.image)"
                                     class="card-img-top image-donasi"
                                 />
                                 <div class="card-body">
-                                    <div class="h5">Banjir Surabaya</div>
+                                    <div class="h5">{{ campaign.title }}</div>
                                     <div class="progress mt-3 mb-2">
                                         <div
                                             class="progress-bar progress-bar-striped progress-bar-animated"
@@ -43,7 +47,7 @@
                             </div>
                         </Link>
                     </div>
-                    <div class="col-md-4">
+                    <!-- <div class="col-md-4">
                         <Link
                             :href="route('kumpul.donasi', 'banjir-surabaya')"
                             class="text-decoration-none"
@@ -76,7 +80,7 @@
                                 </div>
                             </div>
                         </Link>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </section>
@@ -88,6 +92,9 @@ import { Head, Link } from "@inertiajs/inertia-vue3";
 import Bener from "@/Components/Bener.vue";
 export default {
     name: "Home",
+    props: {
+        campaigns: Array,
+    },
     components: {
         AppLayout,
         Head,
@@ -96,7 +103,7 @@ export default {
     },
     methods: {
         getImagePath(imagePath) {
-            return "../img/" + imagePath;
+            return "/storage/" + imagePath;
         },
     },
 };

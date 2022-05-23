@@ -4,7 +4,7 @@
         <Nav />
         <slot />
         <footer class="footer">
-            <div class="container">
+            <div class="container-fluid">
                 <strong>&copy; Malang 2022</strong>
             </div>
         </footer>

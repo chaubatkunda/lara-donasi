@@ -87,6 +87,11 @@ const submit = () => {
                         >
                             Log in
                         </Botton>
+                        <Link
+                            href="/login-google"
+                            class="btn btn-secondary mt-2"
+                            >Google</Link
+                        >
 
                         <small class="mt-4"
                             >Don't have account?

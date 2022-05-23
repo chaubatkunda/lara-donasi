@@ -1,0 +1,145 @@
+<template>
+    <Head title="Create Campaign" />
+    <DashboardLayout>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mt-5">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body">
+                            <form action="#" method="post" autocomplete="off">
+                                <div class="mb-2">
+                                    <label for="title" class="form-label"
+                                        >Title</label
+                                    >
+                                    <input
+                                        type="text"
+                                        v-model="form.title"
+                                        id="title"
+                                        class="form-control"
+                                    />
+                                    <small
+                                        class="text-danger"
+                                        v-if="errors.title"
+                                        >{{ errors.title }}</small
+                                    >
+                                </div>
+                                <div class="mb-2">
+                                    <label for="description" class="form-label"
+                                        >Description</label
+                                    >
+                                    <textarea
+                                        v-model="form.description"
+                                        class="form-control"
+                                        id="description"
+                                    ></textarea>
+                                    <small
+                                        class="text-danger"
+                                        v-if="errors.description"
+                                        >{{ errors.description }}</small
+                                    >
+                                </div>
+                                <div class="mb-2">
+                                    <label for="image" class="form-label"
+                                        >Image</label
+                                    >
+                                    <input
+                                        type="file"
+                                        show-size
+                                        @change="selectFile"
+                                        @input="
+                                            form.image = $event.target.files[0]
+                                        "
+                                        id="image"
+                                        class="form-control"
+                                    />
+                                    <small
+                                        class="text-danger"
+                                        v-if="errors.image"
+                                        >{{ errors.image }}</small
+                                    >
+                                </div>
+                                <div class="mb-2">
+                                    <label for="tanggal" class="form-label"
+                                        >Tanggal</label
+                                    >
+                                    <input
+                                        type="date"
+                                        v-model="form.expired"
+                                        id="tanggal"
+                                        class="form-control"
+                                    />
+                                    <small
+                                        class="text-danger"
+                                        v-if="errors.expired"
+                                        >{{ errors.expired }}</small
+                                    >
+                                </div>
+                                <div class="mb-2">
+                                    <button
+                                        class="btn btn-primary"
+                                        @click.prevent="update"
+                                    >
+                                        Update
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <img
+                    :src="imagePreview"
+                    class="img-fluid"
+                    v-show="showPreview"
+                />
+            </div>
+        </div>
+    </DashboardLayout>
+</template>
+<script>
+import DashboardLayout from "@/Layouts/DashboardLayout.vue";
+import { Head, Link } from "@inertiajs/inertia-vue3";
+export default {
+    name: "CampaignCreate",
+    props: {
+        errors: Object,
+        campaign: Object,
+    },
+    data() {
+        return {
+            form: this.$inertia.form({
+                _method: "put",
+                _token: this.$page.props.csrf_token,
+                title: this.campaign.title,
+                description: this.campaign.description,
+                image: undefined,
+                expired: this.campaign.expired,
+            }),
+            imagePreview: null,
+            showPreview: false,
+        };
+    },
+    components: {
+        DashboardLayout,
+        Head,
+        Link,
+    },
+    methods: {
+        update() {
+            this.form.put(route("campaign.update", this.campaign.id), {
+                onSuccess: () => this.form.reset(),
+            });
+        },
+        selectFile(file) {
+            const fil = file.target.files[0];
+            let reader = new FileReader();
+            reader.onload = (e) => {
+                this.showPreview = true;
+                this.imagePreview = e.target.result;
+            };
+            reader.readAsDataURL(fil);
+        },
+    },
+};
+</script>

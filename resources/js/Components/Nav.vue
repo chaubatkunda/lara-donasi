@@ -38,6 +38,17 @@
                             >Galang Dana</NavLink
                         >
                     </li>
+                    <li class="nav-item" v-if="!$page.props.auth.user">
+                        <NavLink :href="route('login')">Login</NavLink>
+                    </li>
+                    <li class="nav-item">
+                        <NavLink
+                            v-if="$page.props.is_admin"
+                            :href="route('dashboard')"
+                        >
+                            Dashboard
+                        </NavLink>
+                    </li>
                 </ul>
                 <div class="d-flex">
                     <input
@@ -56,6 +67,14 @@
                 >
                     ...
                 </button>
+                <Link
+                    class="btn btn-danger btn-sm ms-2"
+                    v-if="$page.props.auth.user"
+                    :href="route('logout')"
+                    method="post"
+                    as="button"
+                    >Sign out</Link
+                >
             </div>
         </div>
     </nav>

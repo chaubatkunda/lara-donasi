@@ -7,7 +7,7 @@
     >
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasWithBackdropLabel">
-                Offcanvas with backdrop
+                Sanbarcode
             </h5>
             <button
                 type="button"
@@ -17,12 +17,7 @@
             ></button>
         </div>
         <div class="offcanvas-body">
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. In
-                magnam iusto iste quisquam corporis ipsum dolore recusandae,
-                modi id facilis quis repellendus, eius dignissimos saepe maiores
-                vel, earum error similique?
-            </p>
+            <p>Terima Kasih</p>
         </div>
     </div>
 </template>
