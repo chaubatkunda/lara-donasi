@@ -13,10 +13,10 @@ class HomeController extends Controller
 {
     public function __construct()
     {
-        // Config::$serverKey    = config('services.midtrans.serverKey');
-        // Config::$isProduction = config('services.midtrans.isProduction');
-        // Config::$isSanitized  = config('services.midtrans.isSanitized');
-        // Config::$is3ds        = config('services.midtrans.is3ds');
+        Config::$serverKey    = config('services.midtrans.serverKey');
+        Config::$isProduction = config('services.midtrans.isProduction');
+        Config::$isSanitized  = config('services.midtrans.isSanitized');
+        Config::$is3ds        = config('services.midtrans.is3ds');
     }
     public function index(Request $request)
     {
@@ -60,7 +60,6 @@ class HomeController extends Controller
     // CheckOutDonasi
     public function checkOut(Request $request)
     {
-
         Transaction::create([
             'user_id'     => Auth::id(),
             'campaign_id' => $request->campaign_id,
@@ -70,5 +69,10 @@ class HomeController extends Controller
         ]);
 
         return to_route('donasi');
+    }
+
+    public function pembayaran()
+    {
+        //
     }
 }
