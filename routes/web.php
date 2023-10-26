@@ -1,17 +1,14 @@
 <?php
 
-use App\Http\Controllers\{
-    AuthGoogleController,
+use App\Http\Controllers\{AuthGoogleController,
     CampaignController,
     DashboardController,
     DonaturController,
-    HomeController
-};
+    HomeController};
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 // Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/', [HomeController::class, 'index'])->name('donasi');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/donasi/{slug}', [HomeController::class, 'kumpuldonasi'])->name('kumpul.donasi');
 
 // Login & Register Google
@@ -23,6 +20,7 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::get('/galang-dana', [HomeController::class, 'galangdana'])->name('galang.dana');
     Route::post('/galang-checkout', [HomeController::class, 'checkOut'])->name('galang.checkout');
     Route::get('/galang-checkout', [HomeController::class, 'checkOut'])->name('galang.view');
+    Route::get('/pay/{id}', [HomeController::class, 'pay'])->name('pay');
 });
 
 Route::middleware('auth')->group(function () {

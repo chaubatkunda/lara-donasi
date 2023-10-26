@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{Campaign, Transaction};
+use App\Models\{
+    Campaign,
+    Transaction
+};
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Midtrans\Config;
@@ -60,19 +64,43 @@ class HomeController extends Controller
     // CheckOutDonasi
     public function checkOut(Request $request)
     {
-        Transaction::create([
-            'user_id'     => Auth::id(),
-            'campaign_id' => $request->campaign_id,
-            'nominal'     => $request->nominal,
-            'description' => $request->description,
-            'image'       => $request->file('image')->store('transaction')
-        ]);
+        $orderId = mt_rand(111111, 999999);
+        $params = array(
+            'transaction_details' => array(
+                'order_id' => $orderId,
+                'gross_amount' => $request->nominal, // no decimal allowed for creditcard
+            ),
+            'customer_details' => array(
+                'name'    => Auth::user()->name,
+                'email'         => Auth::user()->email,
+            ),
+            // 'enabled_payments' =>  array('bca_va', 'bni_va', 'bank_transfer', 'bri_va'),
+            // 'enabled_payments' => array('gopay', 'bank_transfer'),
+            'vtweb' => array()
+        );
+        try {
+            $paymentUrl = Snap::getSnapToken($params);
+            Transaction::create([
+                'user_id'     => Auth::id(),
+                'campaign_id' => $request->campaign_id,
+                'invoice'     => $orderId,
+                'nominal'     => $request->nominal,
+                'description' => $request->description,
+                'image'       => $request->image ? $request->file('image')->store('transaction') : null,
+                'url_pay'     => $paymentUrl,
+            ]);
+            return to_route('pay', $orderId);
+        } catch (Exception $e) {
+            return $e;
+        }
 
-        return to_route('donasi');
+
+        // return to_route('donasi');
     }
 
-    public function pembayaran()
+    public function pay($id)
     {
-        //
+        $transaksi = Transaction::whereInvoice($id)->first();
+        return inertia('Midtrans', compact('transaksi'));
     }
 }

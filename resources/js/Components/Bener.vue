@@ -14,8 +14,8 @@
     </div>
 </template>
 <script>
-import "vue3-carousel/dist/carousel.css";
-import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
+import { Carousel, Navigation, Pagination, Slide } from "vue3-carousel";
+
 export default {
     name: "Bener",
     components: {
@@ -54,7 +54,7 @@ export default {
 <style scoped>
 .img-carousel {
     width: 100%;
-    height: 80vh;
+    height: 200px;
     object-position: top;
     object-fit: cover;
 }

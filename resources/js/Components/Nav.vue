@@ -1,92 +1,35 @@
 <template>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-        <div class="container">
-            <Link class="navbar-brand" :href="route('donasi')"
-                >Lara'Donasi</Link
-            >
-            <button
-                class="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarNav"
-                aria-controls="navbarNav"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-            >
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mx-auto">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <ul class="nav nav-pills text-bg-primary">
                     <li class="nav-item">
-                        <NavLink
-                            :active="route().current('donasi')"
-                            :href="route('donasi')"
-                            >Donasi</NavLink
-                        >
+                        <Link class="nav-link" :href="route('home')">
+                            <span class="fs-5 fw-bold">Lara Donasi</span>
+                        </Link>
                     </li>
-                    <li class="nav-item">
-                        <NavLink
-                            :active="route().current('donasi.saya')"
-                            :href="route('donasi.saya')"
-                            >Donasi Saya</NavLink
+                    <li class="nav-item ms-auto">
+                        <button
+                            class="nav-link rounded-pill mt-2 mb-2"
+                            type="button"
+                            data-bs-toggle="offcanvas"
+                            data-bs-target="#offcanvasWithBackdrop"
+                            aria-controls="offcanvasWithBackdrop"
                         >
-                    </li>
-                    <li class="nav-item">
-                        <NavLink
-                            :active="route().current('galang.dana')"
-                            :href="route('galang.dana')"
-                            >Galang Dana</NavLink
-                        >
-                    </li>
-                    <li class="nav-item" v-if="!$page.props.auth.user">
-                        <NavLink :href="route('login')">Login</NavLink>
-                    </li>
-                    <li class="nav-item">
-                        <NavLink
-                            v-if="$page.props.is_admin"
-                            :href="route('dashboard')"
-                        >
-                            Dashboard
-                        </NavLink>
+                            <i class="bi bi-list"></i>
+                        </button>
                     </li>
                 </ul>
-                <div class="d-flex">
-                    <input
-                        class="form-control ms-2"
-                        type="search"
-                        placeholder="Coba Cari"
-                        aria-label="Search"
-                    />
-                </div>
-                <button
-                    class="btn btn-info ms-3"
-                    type="button"
-                    data-bs-toggle="offcanvas"
-                    data-bs-target="#offcanvasWithBackdrop"
-                    aria-controls="offcanvasWithBackdrop"
-                >
-                    ...
-                </button>
-                <Link
-                    class="btn btn-danger btn-sm ms-2"
-                    v-if="$page.props.auth.user"
-                    :href="route('logout')"
-                    method="post"
-                    as="button"
-                    >Sign out</Link
-                >
             </div>
         </div>
-    </nav>
+    </div>
 </template>
 <script>
-import { Link } from "@inertiajs/inertia-vue3";
 import NavLink from "@/Components/NavLink.vue";
 
 export default {
     name: "Nav",
     components: {
-        Link,
         NavLink,
     },
 };

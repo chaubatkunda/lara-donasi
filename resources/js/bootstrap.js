@@ -1,6 +1,8 @@
 window._ = require("lodash");
 try {
     window.$ = window.jQuery = require("jquery");
+    process.env.MIX_MIDTRANS_SANDBOX_URL;
+    // console.log(window.urlSnap);
     require("bootstrap");
 } catch (e) {
     console.log(e);
@@ -31,6 +33,7 @@ window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
 (function () {
     "use strict";
     var tooltipTriggerList = [].slice.call(

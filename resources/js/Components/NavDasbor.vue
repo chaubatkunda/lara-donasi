@@ -3,7 +3,7 @@
         class="nav-dasbor d-flex flex-column flex-shrink-0 p-3 bg-light overflow-auto vh-100"
     >
         <Link
-            :href="route('donasi')"
+            :href="route('home')"
             class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none"
         >
             <span class="fs-4">Lara'Donasi</span>
@@ -23,16 +23,16 @@
                 <NavLink
                     :href="route('campaign.index')"
                     :active="route().current('campaign*')"
-                    >Campaign</NavLink
-                >
+                    >Campaign
+                </NavLink>
             </li>
 
             <li>
                 <NavLink
                     :href="route('donatur.index')"
                     :active="route().current('donatur*')"
-                    >Donatur</NavLink
-                >
+                    >Donatur
+                </NavLink>
             </li>
             <li>
                 <a href="#" class="nav-link link-dark">Laporan Campaign</a>
@@ -69,15 +69,17 @@
                 <li>
                     <a class="dropdown-item" href="#">Profile</a>
                 </li>
-                <li><hr class="dropdown-divider" /></li>
+                <li>
+                    <hr class="dropdown-divider" />
+                </li>
                 <li>
                     <Link
                         class="dropdown-item"
                         :href="route('logout')"
                         method="post"
                         as="button"
-                        >Sign out</Link
-                    >
+                        >Sign out
+                    </Link>
                 </li>
             </ul>
         </div>
@@ -147,6 +149,7 @@
 <script>
 import NavLink from "@/Components/NavLink.vue";
 import { Link } from "@inertiajs/inertia-vue3";
+
 export default {
     name: "NavDasbor",
     components: {

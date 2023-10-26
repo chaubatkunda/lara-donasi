@@ -7,7 +7,7 @@
     >
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasWithBackdropLabel">
-                Sanbarcode
+                Lara Donasi
             </h5>
             <button
                 type="button"
@@ -17,7 +17,10 @@
             ></button>
         </div>
         <div class="offcanvas-body">
-            <p>Terima Kasih</p>
+            <p>
+                Terima kasih telah berdonasi, selalu dibarikan kesehatan yang
+                baik sama yang Maha Kuasa
+            </p>
         </div>
     </div>
 </template>

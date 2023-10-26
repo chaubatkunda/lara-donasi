@@ -22,9 +22,12 @@ return new class extends Migration
                 ->constrained('campaigns')
                 ->references('id')
                 ->cascadeOnDelete();
+            $table->string('invoice');
             $table->double('nominal');
             $table->text('description')->nullable();
-            $table->string('image');
+            $table->string('image')->nullable();
+            $table->string('url_pay');
+            $table->string('status')->default('waiting');
             $table->softDeletes();
             $table->timestamps();
         });
