@@ -4,12 +4,11 @@ import Checkbox from "@/Components/Checkbox.vue";
 import GuestLayout from "@/Layouts/GuestLayout.vue";
 import Input from "@/Components/Input.vue";
 import Label from "@/Components/Label.vue";
-import ValidationErrors from "@/Components/ValidationErrors.vue";
 import { Head, Link, useForm } from "@inertiajs/inertia-vue3";
+import InputError from "@/Components/InputError.vue";
 
 defineProps({
     canResetPassword: Boolean,
-    status: String,
 });
 
 const form = useForm({
@@ -28,10 +27,6 @@ const submit = () => {
 <template>
     <GuestLayout>
         <Head title="Log in" />
-        <ValidationErrors class="mb-4" />
-        <div v-if="status" class="mb-4 text-success">
-            {{ status }}
-        </div>
         <div class="card shadow-lg border-0">
             <div class="card-body">
                 <form @submit.prevent="submit" autocomplete="off">
@@ -44,6 +39,7 @@ const submit = () => {
                             autofocus
                             autocomplete="username"
                         />
+                        <InputError :message="form.errors.email" />
                     </div>
                     <div class="mt-4">
                         <Label for="password" value="Password" />
@@ -53,6 +49,7 @@ const submit = () => {
                             v-model="form.password"
                             autocomplete="current-password"
                         />
+                        <InputError :message="form.errors.password" />
                     </div>
 
                     <div class="d-flex justify-content-between">
@@ -90,16 +87,16 @@ const submit = () => {
                         <Link
                             href="/login-google"
                             class="btn btn-secondary mt-2"
-                            >Google</Link
-                        >
+                            >Google
+                        </Link>
 
                         <small class="mt-4"
                             >Don't have account?
                             <Link
                                 :href="route('register')"
                                 class="text-decoration-none border-bottom"
-                                >Register</Link
-                            >
+                                >Register
+                            </Link>
                         </small>
                     </div>
                 </form>

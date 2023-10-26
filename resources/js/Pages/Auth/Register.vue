@@ -3,8 +3,8 @@ import Button from "@/Components/Button.vue";
 import GuestLayout from "@/Layouts/GuestLayout.vue";
 import Input from "@/Components/Input.vue";
 import Label from "@/Components/Label.vue";
-import ValidationErrors from "@/Components/ValidationErrors.vue";
 import { Head, Link, useForm } from "@inertiajs/inertia-vue3";
+import InputError from "@/Components/InputError.vue";
 
 const form = useForm({
     name: "",
@@ -25,9 +25,7 @@ const submit = () => {
     <GuestLayout>
         <Head title="Register" />
 
-        <ValidationErrors class="mb-4" />
-
-        <div class="card shadow-lg border-0">
+        <div class="card shadow-lg border-0 mt-4 mb-3">
             <div class="card-body">
                 <form @submit.prevent="submit">
                     <div>
@@ -39,6 +37,7 @@ const submit = () => {
                             autofocus
                             autocomplete="name"
                         />
+                        <InputError :message="form.errors.name" />
                     </div>
 
                     <div class="mt-4">
@@ -49,6 +48,7 @@ const submit = () => {
                             v-model="form.email"
                             autocomplete="username"
                         />
+                        <InputError :message="form.errors.email" />
                     </div>
 
                     <div class="mt-4">
@@ -59,6 +59,7 @@ const submit = () => {
                             v-model="form.password"
                             autocomplete="new-password"
                         />
+                        <InputError :message="form.errors.password" />
                     </div>
 
                     <div class="mt-4">
@@ -71,6 +72,9 @@ const submit = () => {
                             type="password"
                             v-model="form.password_confirmation"
                             autocomplete="new-password"
+                        />
+                        <InputError
+                            :message="form.errors.password_confirmation"
                         />
                     </div>
 
