@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -10,7 +11,9 @@ class DonaturController extends Controller
 
     public function index()
     {
-        return inertia('Donatur/Index');
+        return inertia('Donatur/Index', [
+            'transactions' => Transaction::query()->with('user')->get()
+        ]);
     }
 
     public function create()
