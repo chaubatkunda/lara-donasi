@@ -19,20 +19,26 @@
                         class="nav nav-pills bg-white border-top border-1 border-primary"
                     >
                         <li class="nav-item">
-                            <a class="nav-link" href="#"
-                                ><i class="bi bi-bag-heart"></i> Donasi</a
-                            >
+                            <NavLink
+                                :href="route('home')"
+                                :active="route().current('home')"
+                                ><i class="bi bi-bag-heart"></i> Donasi
+                            </NavLink>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#"
-                                ><i class="bi bi-box2-heart"></i> Galang Dana</a
-                            >
+                            <NavLink
+                                :href="route('galang.dana')"
+                                :active="route().current('galang.dana')"
+                                ><i class="bi bi-box2-heart"></i> Galang Dana
+                            </NavLink>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#"
+                            <NavLink
+                                :href="route('donasi.saya')"
+                                :active="route().current('donasi.saya')"
                                 ><i class="bi bi-postcard-heart-fill"></i>
-                                Donasi Saya</a
-                            >
+                                Donasi Saya
+                            </NavLink>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link"

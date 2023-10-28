@@ -10,7 +10,7 @@
                 Rp.330.000.000
                 <small class="text-primary">Terkumpul</small>
             </div>
-            <div class="progress mt-3 mb-2">
+            <div class="progress mt-3 mb-2" style="height: 5px">
                 <div
                     class="progress-bar progress-bar-striped progress-bar-animated"
                     role="progressbar"
@@ -23,20 +23,16 @@
                 ></div>
             </div>
             <div class="d-flex justify-content-between">
-                <div class="text-small">1443 Donasi</div>
+                <div class="text-small">
+                    {{ campaign.transactions_count }} Donasi
+                </div>
                 <div class="text-small">
                     {{ countDay(campaign.expired) }} hari lagi
                 </div>
             </div>
 
             <div class="d-grid gap-2 mx-auto mt-3">
-                <Link
-                    :href="route('nominal.donasi', campaign.slug, 'nominal')"
-                    class="btn btn-primary"
-                    type="button"
-                >
-                    Donasi Sekarang!
-                </Link>
+                <ModalDonasi :slug="campaign.slug" />
             </div>
             <div class="mt-4 mb-3">
                 {{ campaign.description }}
@@ -46,9 +42,11 @@
 </template>
 <script>
 import AppLayout from "@/Layouts/AppLayout.vue";
+import ModalDonasi from "@/Pages/Partials/ModalDonasi.vue";
 
 export default {
     name: "Home",
+    components: { ModalDonasi },
     layout: AppLayout,
     props: {
         campaign: Object,
@@ -66,27 +64,24 @@ export default {
             const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
             const firstDate = new Date();
             const secondDate = new Date(hari);
-            const diffDays = Math.round(
+            return Math.round(
                 Math.abs((firstDate.getTime() - secondDate.getTime()) / oneDay),
             );
-            return diffDays;
         },
         persentProgres(crt, exp) {
             const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
-            const crta = new Date(crt);
-            const expr = new Date(exp);
-            const nDay = new Date();
-            const allDay = Math.round(
-                Math.abs((crta.getTime() - expr.getTime()) / oneDay),
-            );
+            const startData = new Date(crt);
+            const endData = new Date(exp);
+            const dateNow = new Date();
+            const differenceDate = Math.round(
+                Math.abs((startData.getTime() - endData.getTime()) / oneDay),
+            ).toString();
             const nowDay = Math.round(
-                Math.abs((nDay.getTime() - expr.getTime()) / oneDay),
-            );
-            const hasilCount = (nowDay / allDay) * 100;
-            // console.log(parseInt(hasilCount));
-            console.log(nDay);
-
-            return parseInt(hasilCount) + "%";
+                Math.abs((dateNow.getTime() - endData.getTime()) / oneDay),
+            ).toString();
+            const parceintDate = 100 - (nowDay / differenceDate) * 100;
+            console.log(parceintDate + "%");
+            return parseInt(parceintDate) + "%";
         },
     },
 };

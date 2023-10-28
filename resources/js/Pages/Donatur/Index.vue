@@ -18,12 +18,15 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                    <tr
+                                        v-for="(ttd, index) in transactions"
+                                        :key="ttd.id"
+                                    >
+                                        <td>{{ index + 1 }}</td>
+                                        <td>{{ ttd.user.name }}</td>
+                                        <td>{{ ttd.user.email }}</td>
+                                        <td>{{ ttd.user.telp }}</td>
+                                        <td>{{ ttd.user.alamat }}</td>
                                         <td></td>
                                     </tr>
                                 </tbody>
@@ -41,5 +44,10 @@ import DashboardLayout from "@/Layouts/DashboardLayout.vue";
 export default {
     name: "DonaturIndex",
     layout: DashboardLayout,
+    props: {
+        transactions: {
+            type: Array,
+        },
+    },
 };
 </script>

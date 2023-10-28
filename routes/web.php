@@ -21,6 +21,7 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::post('/galang-checkout', [HomeController::class, 'checkOut'])->name('galang.checkout');
     Route::get('/galang-checkout', [HomeController::class, 'checkOut'])->name('galang.view');
     Route::get('/pay/{id}', [HomeController::class, 'pay'])->name('pay');
+    Route::get('/pay-auto', [HomeController::class, 'payAuto'])->name('pay.auto');
 });
 
 Route::middleware('auth')->group(function () {
