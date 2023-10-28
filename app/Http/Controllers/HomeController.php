@@ -2,27 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{
-    Campaign,
-    Transaction
-};
+use App\Models\{Campaign, Transaction};
 use Exception;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Response;
+use Inertia\ResponseFactory;
 use Midtrans\Config;
 use Midtrans\Snap;
-use Midtrans\Transaction as MidtransTrans;
 
 class HomeController extends Controller
 {
     public function __construct()
     {
-        Config::$serverKey    = config('services.midtrans.serverKey');
+        Config::$serverKey = config('services.midtrans.serverKey');
         Config::$isProduction = config('services.midtrans.isProduction');
-        Config::$isSanitized  = config('services.midtrans.isSanitized');
-        Config::$is3ds        = config('services.midtrans.is3ds');
+        Config::$isSanitized = config('services.midtrans.isSanitized');
+        Config::$is3ds = config('services.midtrans.is3ds');
     }
-    public function index(Request $request)
+
+    public function index(Request $request): Response|ResponseFactory
     {
         return inertia('Home', [
             'campaigns' => Campaign::get()
@@ -31,12 +31,16 @@ class HomeController extends Controller
 
     public function kumpuldonasi($slug)
     {
+//        return Campaign::withCount('transactions')->with('transactions')->whereSlug($slug)->firstOrFail();
         return inertia('Donasi', [
-            'campaign' => Campaign::whereSlug($slug)->firstOrFail()
+            'campaign' => Campaign::withCount('transactions')
+                ->with('transactions')
+                ->whereSlug($slug)
+                ->firstOrFail()
         ]);
     }
 
-    public function nominaldonasi($slug)
+    public function nominaldonasi($slug): Response|ResponseFactory
     {
         $campaign = Campaign::whereSlug($slug)->firstOrFail();
 
@@ -45,7 +49,7 @@ class HomeController extends Controller
         ]);
     }
 
-    public function donasisaya()
+    public function donasisaya(): Response|ResponseFactory
     {
         // return Transaction::with('campaign')->whereUserId(Auth::id())->first();
         return inertia('DonasiSaya', [
@@ -54,53 +58,60 @@ class HomeController extends Controller
     }
 
 
-
-    public function galangdana()
+    public function galangdana(): Response|ResponseFactory
     {
         return inertia('GalangDana');
     }
 
 
     // CheckOutDonasi
-    public function checkOut(Request $request)
+    public function checkOut(Request $request): void
     {
-        $orderId = mt_rand(111111, 999999);
-        $params = array(
-            'transaction_details' => array(
-                'order_id' => $orderId,
-                'gross_amount' => $request->nominal, // no decimal allowed for creditcard
-            ),
-            'customer_details' => array(
-                'name'    => Auth::user()->name,
-                'email'         => Auth::user()->email,
-            ),
-            // 'enabled_payments' =>  array('bca_va', 'bni_va', 'bank_transfer', 'bri_va'),
-            // 'enabled_payments' => array('gopay', 'bank_transfer'),
-            'vtweb' => array()
-        );
-        try {
-            $paymentUrl = Snap::getSnapToken($params);
-            Transaction::create([
-                'user_id'     => Auth::id(),
-                'campaign_id' => $request->campaign_id,
-                'invoice'     => $orderId,
-                'nominal'     => $request->nominal,
-                'description' => $request->description,
-                'image'       => $request->image ? $request->file('image')->store('transaction') : null,
-                'url_pay'     => $paymentUrl,
-            ]);
-            return to_route('pay', $orderId);
-        } catch (Exception $e) {
-            return $e;
-        }
+        $request->validate([
+            "nominal" => 'required|numeric',
+            "image" => 'required|image|mimes:jpg,jpeg,png'
+        ]);
 
 
         // return to_route('donasi');
     }
 
-    public function pay($id)
+    public function pay($id): Response|ResponseFactory
     {
         $transaksi = Transaction::whereInvoice($id)->first();
         return inertia('Midtrans', compact('transaksi'));
+    }
+
+    public function payAuto(): Exception|RedirectResponse
+    {
+        try {
+            $orderId = mt_rand(111111, 999999);
+            $params = array(
+                'transaction_details' => array(
+                    'order_id' => $orderId,
+                    'gross_amount' => $request->nominal, // no decimal allowed for creditcard
+                ),
+                'customer_details' => array(
+                    'name' => Auth::user()->name,
+                    'email' => Auth::user()->email,
+                ),
+                // 'enabled_payments' =>  array('bca_va', 'bni_va', 'bank_transfer', 'bri_va'),
+                // 'enabled_payments' => array('gopay', 'bank_transfer'),
+                'vtweb' => array()
+            );
+            $paymentUrl = Snap::getSnapToken($params);
+            Transaction::create([
+                'user_id' => Auth::id(),
+                'campaign_id' => $request->campaign_id,
+                'invoice' => $orderId,
+                'nominal' => $request->nominal,
+                'description' => $request->description,
+                'image' => $request->image ? $request->file('image')->store('transaction') : null,
+                'url_pay' => $paymentUrl,
+            ]);
+            return to_route('pay', $orderId);
+        } catch (Exception $e) {
+            return $e;
+        }
     }
 }
