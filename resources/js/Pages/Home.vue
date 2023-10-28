@@ -31,7 +31,6 @@
                     </Slide>
                     <template #addons>
                         <Navigation />
-                        <!--                        <Pagination />-->
                     </template>
                 </Carousel>
             </div>
@@ -64,15 +63,19 @@
                                 <div
                                     class="progress-bar progress-bar-striped progress-bar-animated"
                                     role="progressbar"
-                                    aria-valuenow="20"
-                                    aria-valuemin="0"
-                                    aria-valuemax="100"
-                                    style="width: 70%"
+                                    :style="{
+                                        width: persentProgres(
+                                            campaign.start_date,
+                                            campaign.expired,
+                                        ),
+                                    }"
                                 ></div>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <div class="text-small">Rp.2.000.000</div>
-                                <div class="text-small">4 Hari Lagi</div>
+                                <div class="text-small">
+                                    {{ countDay(campaign.expired) }} Hari Lagi
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -125,6 +128,29 @@ export default {
         },
         getImage(imagePath) {
             return "../img/" + imagePath;
+        },
+        countDay(hari) {
+            const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+            const firstDate = new Date();
+            const secondDate = new Date(hari);
+            return Math.round(
+                Math.abs((firstDate.getTime() - secondDate.getTime()) / oneDay),
+            );
+        },
+        persentProgres(crt, exp) {
+            const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+            const startData = new Date(crt);
+            const endData = new Date(exp);
+            const dateNow = new Date();
+            const differenceDate = Math.round(
+                Math.abs((startData.getTime() - endData.getTime()) / oneDay),
+            ).toString();
+            const nowDay = Math.round(
+                Math.abs((dateNow.getTime() - endData.getTime()) / oneDay),
+            ).toString();
+            const parceintDate = 100 - (nowDay / differenceDate) * 100;
+            console.log(parceintDate + "%");
+            return parseInt(parceintDate) + "%";
         },
     },
 };

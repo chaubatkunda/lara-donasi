@@ -18,8 +18,12 @@ body {
         }
     }
 
-    .active {
-        border-radius: 20px;
+    .nav-pills {
+        .nav-item {
+            .active {
+                border-radius: 20px !important;
+            }
+        }
     }
 
     .main {
@@ -30,6 +34,10 @@ body {
                 // overflow-y: hidden;
             }
         }
+    }
+
+    .btn {
+        border-radius: 20px;
     }
 
     //.img-carousel {

@@ -5,28 +5,15 @@
             Masukan Nominal Donasi
         </div>
         <div class="card-body">
-            <div class="list-group">
-                <button
-                    type="button"
-                    class="list-group-item list-group-item-action shadow-sm border-0 mb-3 border-top"
-                    aria-current="true"
-                >
-                    Rp.{{ transaksi.nominal }}
-                </button>
+            <div class="mb-2">
+                <input type="text" class="form-control" v-model="price" />
             </div>
             <form>
                 <div class="list-group d-grid gap-2 mx-auto mt-3">
-                    <!-- <Link
-                        class="btn btn-primary"
-                        target="_blank"
-                        :href="transaksi.url_pay"
-                    >
-                        Bayar
-                    </Link> -->
                     <button
                         type="button"
+                        @click.prevent="payDonate"
                         class="btn btn-primary"
-                        @click="pay(transaksi.url_pay)"
                     >
                         Bayar
                     </button>
@@ -36,20 +23,22 @@
     </div>
 </template>
 <script>
-import AppLayout from "@/Layouts/AppLayout.vue";
+import ListLayout from "@/Layouts/ListLayout.vue";
 
 export default {
-    layout: AppLayout,
+    layout: ListLayout,
     props: {
         transaksi: Object,
     },
-    data: () => ({
-        // midkey: process.env.MIX_MIDTRANS_CLIENT_KEY,
-    }),
+    data() {
+        return {
+            price: this.transaksi.nominal,
+        };
+    },
 
     methods: {
-        pay(url) {
-            snap.pay(url, {
+        payDonate() {
+            snap.pay(this.transaksi.url_pay, {
                 onSuccess: (res) => {
                     console.log(res);
                 },

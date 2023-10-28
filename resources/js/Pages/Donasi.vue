@@ -32,7 +32,11 @@
             </div>
 
             <div class="d-grid gap-2 mx-auto mt-3">
-                <ModalDonasi :slug="campaign.slug" />
+                <Link
+                    :href="route('nominal.donasi', campaign.slug)"
+                    class="btn btn-primary"
+                    >Donasi
+                </Link>
             </div>
             <div class="mt-4 mb-3">
                 {{ campaign.description }}
@@ -41,13 +45,11 @@
     </div>
 </template>
 <script>
-import AppLayout from "@/Layouts/AppLayout.vue";
-import ModalDonasi from "@/Pages/Partials/ModalDonasi.vue";
+import ListLayout from "@/Layouts/ListLayout.vue";
 
 export default {
     name: "Home",
-    components: { ModalDonasi },
-    layout: AppLayout,
+    layout: ListLayout,
     props: {
         campaign: Object,
     },

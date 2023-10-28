@@ -8358,11 +8358,14 @@ body .card .image-donasi {
   -o-object-fit: cover;
      object-fit: cover;
 }
-body .active {
-  border-radius: 20px;
+body .nav-pills .nav-item .active {
+  border-radius: 20px !important;
 }
 body .main .container-fluid .nav-dasbor, body .main .container-xxl .nav-dasbor, body .main .container-xl .nav-dasbor, body .main .container-lg .nav-dasbor, body .main .container-md .nav-dasbor, body .main .container-sm .nav-dasbor {
   flex-wrap: nowrap;
+}
+body .btn {
+  border-radius: 20px;
 }
 body .footer {
   min-height: 100px;

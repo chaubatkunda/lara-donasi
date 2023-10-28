@@ -11,17 +11,17 @@
     <!-- Scripts -->
     @routes
     <script src="{{ mix('js/app.js') }}" defer></script>
-    <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js"
-        data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
+    <script type="text/javascript" src="{{env('MIDTRANS_SANDBOX_URL')}}"
+            data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
     @inertiaHead
 </head>
 
 <body class="font-sans antialiased">
-    @inertia
+@inertia
 
-    @env('local')
-    <script src="http://localhost:8080/js/bundle.js"></script>
-    @endenv
+{{--@env('local')--}}
+{{--    <script src="http://localhost:8080/js/bundle.js"></script>--}}
+{{--@endenv--}}
 </body>
 
 </html>

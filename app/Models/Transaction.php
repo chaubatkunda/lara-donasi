@@ -31,7 +31,7 @@ class Transaction extends Model
         return $this->belongsTo(Campaign::class, 'campaign_id', 'id');
     }
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class)->withDefault([
             'name' => '-'
